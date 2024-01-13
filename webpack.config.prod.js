@@ -1,17 +1,17 @@
-const { merge } = require('webpack-merge')
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-const commonConfig = require('./webpack.config.common')
+const { merge } = require("webpack-merge")
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
+const TerserPlugin = require("terser-webpack-plugin")
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer")
+const commonConfig = require("./webpack.config.common")
 
 module.exports = merge(commonConfig, {
-  mode: 'production',
-  devtool: 'source-map',
+  mode: "production",
+  devtool: "source-map",
   plugins: [
     new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
+      analyzerMode: "static",
       openAnalyzer: false,
-      reportFilename: 'report.html',
+      reportFilename: "report.html",
     }),
   ],
   optimization: {
@@ -22,8 +22,8 @@ module.exports = merge(commonConfig, {
         default: false,
         vendors: false,
         vendor: {
-          chunks: 'all',
-          name: 'vendor',
+          chunks: "all",
+          name: "vendor",
           test: /node_modules/,
         },
       },

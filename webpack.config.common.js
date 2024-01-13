@@ -1,15 +1,15 @@
-const path = require("path");
+const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
-  context: path.resolve(__dirname, "src"),
+  context: resolve(__dirname, "src"),
   entry: "./index.js",
   output: {
     filename: "[name].[contenthash].js",
-    path: path.resolve(__dirname, "dist"),
+    path: resolve(__dirname, "dist"),
     clean: true
   },
   resolve: {
@@ -17,17 +17,17 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "public/index.html")
+      template: resolve(__dirname, "public/index.html")
     }),
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, "public/assets"),
-          to: path.resolve(__dirname, "dist/assets")
+          from: resolve(__dirname, "public/assets"),
+          to: resolve(__dirname, "dist/assets")
         },
         {
-          from: path.resolve(__dirname, "src/fonts"),
-          to: path.resolve(__dirname, "dist/fonts")
+          from: resolve(__dirname, "public/favicon.png"),
+          to: resolve(__dirname, "dist")
         }
       ]
     }),
@@ -61,7 +61,7 @@ module.exports = {
         type: "asset/resource"
       },
       {
-        test: /\.ts?$/,
+        test: /\.[tj]s?$/,
         use: "ts-loader",
         exclude: /node_modules/
       }
