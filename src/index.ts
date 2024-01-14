@@ -8,17 +8,17 @@ const soundList = [
   {
     background: `${pathImages}summer-bg.jpg`,
     icon: `${pathIcons}sun.svg`,
-    sound: createAudio(pathSounds + "summer.mp3")
+    sound: createAudio(`${pathSounds}summer.mp3`)
   },
   {
     background:`${pathImages}rainy-bg.jpg`,
     icon: `${pathIcons}cloud-rain.svg`,
-    sound: createAudio(pathSounds + "rain.mp3")
+    sound: createAudio(`${pathSounds}rain.mp3`)
   },
   {
     background:`${pathImages}winter-bg.jpg`,
     icon: `${pathIcons}cloud-snow.svg`,
-    sound: createAudio(pathSounds + "winter.mp3")
+    sound: createAudio(`${pathSounds}winter.mp3`)
   }
 ];
 let currentSoundIndex = 0;
@@ -30,7 +30,7 @@ function createAudio(src: string): HTMLAudioElement {
   return audio;
 }
 
-const selectSound = ({ target }: Event) => {
+const selectSound = (target: EventTarget) => {
   currentSoundIndex = Number((target as HTMLElement).id.replace("sound_", ""));
   const soundIcons: NodeListOf<HTMLImageElement> = document.querySelectorAll(".list-carts__item img");
   soundIcons.forEach((icon: HTMLImageElement, index) => icon.src = soundList[index].icon);
@@ -43,7 +43,9 @@ const selectSound = ({ target }: Event) => {
     soundList[currentSoundIndex].sound.play();
     soundIcons[currentSoundIndex].src = `${pathIcons}pause.svg`;
   }
-  (document.querySelector(".main") as HTMLElement).style.background = `url(${soundList[currentSoundIndex].background}) no-repeat center/cover`;
+
+  const main = document.querySelector(".main") as HTMLElement;
+  main.style.background = `url(${soundList[currentSoundIndex].background}) no-repeat center/cover`;
 };
 
 const editVolume = ({ target }: Event) => {
@@ -72,9 +74,14 @@ const renderContent = () => {
       </div>
     </div>
   `;
+
   const buttons = document.querySelectorAll(".list-carts__button");
-  buttons.forEach((button): void => button.addEventListener("click", (event) => selectSound(event)));
-  (document.querySelector(".sound-volume") as HTMLInputElement).addEventListener("input", (event) => editVolume(event))
+  buttons.forEach((button): void => {
+    button.addEventListener("click", ({ target }) => selectSound(target));
+  });
+
+  const inputVolumeElem = document.querySelector(".sound-volume") as HTMLInputElement;
+  inputVolumeElem.addEventListener("input", (event) => editVolume(event))
   soundList[currentSoundIndex].sound.play();
 };
 
