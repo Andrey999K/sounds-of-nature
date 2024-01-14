@@ -7,7 +7,8 @@
     "start": "npx webpack serve --config webpack.config.dev.js",
     "build": "npx webpack --config webpack.config.prod.js",
     "build:dev": "npx webpack --config webpack.config.dev.js",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d dist",
+    "prepare": "husky install"
   },
   "keywords": [
     "webpack",
@@ -37,5 +38,8 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.11.1",
     "webpack-merge": "^5.8.0"
+  },
+  "dependencies": {
+    "husky": "^8.0.3"
   }
 }
