@@ -23,17 +23,17 @@ const soundList = [
 ];
 let currentSoundIndex = 0;
 
-function createAudio(src) {
+function createAudio(src: string): HTMLAudioElement {
   const audio = document.createElement("audio");
   audio.src = src;
   audio.controls = true;
   return audio;
 }
 
-const selectSound = (event) => {
-  currentSoundIndex = Number(event.target.id.replace("sound_", ""));
-  const soundIcons = document.querySelectorAll(".list-carts__item img");
-  soundIcons.forEach((icon, index) => icon.src = soundList[index].icon);
+const selectSound = ({ target }: Event) => {
+  currentSoundIndex = Number((target as HTMLElement).id.replace("sound_", ""));
+  const soundIcons: NodeListOf<HTMLImageElement> = document.querySelectorAll(".list-carts__item img");
+  soundIcons.forEach((icon: HTMLImageElement, index) => icon.src = soundList[index].icon);
   if (!soundList[currentSoundIndex].sound.paused) soundList[currentSoundIndex].sound.pause();
   else {
     soundList.forEach(({ sound }) => {
@@ -43,11 +43,11 @@ const selectSound = (event) => {
     soundList[currentSoundIndex].sound.play();
     soundIcons[currentSoundIndex].src = `${pathIcons}pause.svg`;
   }
-  document.querySelector(".main").style.background = `url(${soundList[currentSoundIndex].background}) no-repeat center/cover`;
+  (document.querySelector(".main") as HTMLElement).style.background = `url(${soundList[currentSoundIndex].background}) no-repeat center/cover`;
 };
 
-const editVolume = (e) => {
-  soundList.forEach(({sound}) => sound.volume = e.target.value / 100);
+const editVolume = ({ target }: Event) => {
+  soundList.forEach(({ sound }) => sound.volume = Number((target as HTMLInputElement).value) / 100);
 };
 
 const renderContent = () => {
@@ -73,8 +73,8 @@ const renderContent = () => {
     </div>
   `;
   const buttons = document.querySelectorAll(".list-carts__button");
-  buttons.forEach((button, index) => button.addEventListener("click", selectSound));
-  document.querySelector(".sound-volume").addEventListener("input", editVolume)
+  buttons.forEach((button): void => button.addEventListener("click", (event) => selectSound(event)));
+  (document.querySelector(".sound-volume") as HTMLInputElement).addEventListener("input", (event) => editVolume(event))
   soundList[currentSoundIndex].sound.play();
 };
 
