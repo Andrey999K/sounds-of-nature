@@ -4,7 +4,7 @@ const app = document.querySelector("#app");
 const pathImages = "./assets/";
 const pathIcons = "./assets/icons/";
 const pathSounds = "./assets/sounds/";
-const soundList = [
+const soundList: SoundList[] = [
   {
     background: `${pathImages}summer-bg.jpg`,
     icon: `${pathIcons}sun.svg`,
